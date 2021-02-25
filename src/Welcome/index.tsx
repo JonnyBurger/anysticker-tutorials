@@ -8,10 +8,9 @@ import ScreenShowcase from '../ScreenShowcase';
 import Springy from '../Springy';
 import {Title} from '../Title';
 import {Transition} from '../Transition';
+import audio from './audio.mp4';
 
 export const Welcome: React.FC = () => {
-	const audio = require('./audio.mp4');
-
 	const yourselfGetImage = (f: number) =>
 		require('./stickerify-yourself/Untitled Frame ' + (f + 20) + '.png');
 	const objectGetImage = (f: number) =>

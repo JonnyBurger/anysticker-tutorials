@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Img,
 	interpolate,
 	spring,
 	SpringConfig,
@@ -67,7 +68,7 @@ export const Device: React.FC<{
 				transform: `scale(${scale})`,
 			}}
 		>
-			<img src={src} />
+			<Img src={src} />
 		</Container>
 	);
 };

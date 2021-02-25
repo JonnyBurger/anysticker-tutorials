@@ -1,4 +1,5 @@
 import React, {HTMLAttributes} from 'react';
+import {Img} from 'remotion';
 import styled from 'styled-components';
 
 export const PhoneWidth = 100;
@@ -19,7 +20,7 @@ export const Phone: React.FC<
 	const {phoneScale, src, ...otherProps} = props;
 	return (
 		<Container {...otherProps}>
-			<img
+			<Img
 				src={src}
 				style={{
 					height: PhoneHeight,

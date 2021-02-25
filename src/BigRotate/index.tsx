@@ -1,5 +1,11 @@
 import React from 'react';
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {
+	Img,
+	interpolate,
+	spring,
+	useCurrentFrame,
+	useVideoConfig,
+} from 'remotion';
 
 const BigRotate: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -44,7 +50,7 @@ const BigRotate: React.FC = () => {
 				backgroundColor: 'white',
 			}}
 		>
-			<img
+			<Img
 				src={src}
 				style={{
 					transform: `scale(${scale})`,

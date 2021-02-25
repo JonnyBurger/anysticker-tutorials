@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Img,
 	interpolate,
 	spring,
 	SpringConfig,
@@ -61,7 +62,7 @@ const ScreenShowcase: React.FC<Props> = ({
 			>
 				{title}
 			</div>
-			<img
+			<Img
 				src={src}
 				style={{
 					position: 'absolute',

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Img,
 	interpolate,
 	spring,
 	SpringConfig,
@@ -145,7 +146,7 @@ const RealStickers: React.FC = () => {
 						(currentPoint + length * 1000) % length
 					);
 					return (
-						<img
+						<Img
 							key={o.source}
 							src={`https://anysticker.imgix.net/${o.source}?w=${stickerSize}&h=${stickerSize}&fm=png&fill=solid&fit=fill&auto=compress`}
 							style={{
@@ -158,7 +159,7 @@ const RealStickers: React.FC = () => {
 						/>
 					);
 				})}
-				<img
+				<Img
 					src={f}
 					style={{
 						position: 'absolute',
