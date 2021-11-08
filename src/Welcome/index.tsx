@@ -1,5 +1,5 @@
 import React from 'react';
-import {Audio, Sequence} from 'remotion';
+import {Audio, Series} from 'remotion';
 import BigRotate from '../BigRotate';
 import EndLogo from '../Circle';
 import Layout from '../Layout';
@@ -26,91 +26,93 @@ export const Welcome: React.FC = () => {
 
 	return (
 		<div style={{flex: 1, display: 'flex', backgroundColor: 'white'}}>
-			<Sequence from={0} durationInFrames={40}>
-				<BigRotate />
-			</Sequence>
-			<Sequence from={40} durationInFrames={60}>
-				<Title line1="Welcome to" line2="AnySticker" />
-			</Sequence>
-			<Sequence from={100} durationInFrames={70}>
-				<Layout />
-			</Sequence>
-			<Sequence from={170} durationInFrames={80}>
-				<Transition type="out">
-					<ScreenShowcase
-						animateIn
-						title="Stickerize yourself"
-						getImage={yourselfGetImage}
-					/>
-				</Transition>
-			</Sequence>
-			<Sequence from={250} durationInFrames={70}>
-				<Transition type="in">
+			<Series>
+				<Series.Sequence durationInFrames={40}>
+					<BigRotate />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={60}>
+					<Title line1="Welcome to" line2="AnySticker" />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={70}>
+					<Layout />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={80}>
 					<Transition type="out">
 						<ScreenShowcase
-							title="Stickerize anything"
-							getImage={objectGetImage}
-							animateIn={false}
+							animateIn
+							title="Stickerize yourself"
+							getImage={yourselfGetImage}
 						/>
 					</Transition>
-				</Transition>
-			</Sequence>
-			<Sequence from={320} durationInFrames={60}>
-				<Transition type="in">
-					<Transition type="out">
-						<ScreenShowcase
-							title="Explore sticker packs"
-							getImage={objectGetScroll}
-							animateIn={false}
-						/>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={70}>
+					<Transition type="in">
+						<Transition type="out">
+							<ScreenShowcase
+								title="Stickerize anything"
+								getImage={objectGetImage}
+								animateIn={false}
+							/>
+						</Transition>
 					</Transition>
-				</Transition>
-			</Sequence>
-			<Sequence from={380} durationInFrames={60}>
-				<Transition type="in">
-					<Transition type="out">
-						<ScreenShowcase
-							title="Thousands of stickers"
-							getImage={objectGetThousands}
-							animateIn={false}
-						/>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={60}>
+					<Transition type="in">
+						<Transition type="out">
+							<ScreenShowcase
+								title="Explore sticker packs"
+								getImage={objectGetScroll}
+								animateIn={false}
+							/>
+						</Transition>
 					</Transition>
-				</Transition>
-			</Sequence>
-			<Sequence from={440} durationInFrames={80}>
-				<Transition type="in">
-					<Transition type="out">
-						<ScreenShowcase
-							title="Collect stickers"
-							getImage={objectGetReorder}
-							animateIn={false}
-						/>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={60}>
+					<Transition type="in">
+						<Transition type="out">
+							<ScreenShowcase
+								title="Thousands of stickers"
+								getImage={objectGetThousands}
+								animateIn={false}
+							/>
+						</Transition>
 					</Transition>
-				</Transition>
-			</Sequence>
-			<Sequence from={520} durationInFrames={90}>
-				<Transition type="in">
-					<Transition type="out">
-						<ScreenShowcase
-							title="Share anywhere"
-							getImage={objectGetJuicy}
-							animateIn={false}
-						/>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={80}>
+					<Transition type="in">
+						<Transition type="out">
+							<ScreenShowcase
+								title="Collect stickers"
+								getImage={objectGetReorder}
+								animateIn={false}
+							/>
+						</Transition>
 					</Transition>
-				</Transition>
-			</Sequence>
-			<Sequence from={610} durationInFrames={90}>
-				<RealStickers />
-			</Sequence>
-			<Sequence from={700} durationInFrames={70}>
-				<Title line1="The power is" line2="in your hands." />
-			</Sequence>
-			<Sequence from={770} durationInFrames={100}>
-				<Springy />
-			</Sequence>
-			<Sequence from={870} durationInFrames={75}>
-				<EndLogo />
-			</Sequence>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={90}>
+					<Transition type="in">
+						<Transition type="out">
+							<ScreenShowcase
+								title="Share anywhere"
+								getImage={objectGetJuicy}
+								animateIn={false}
+							/>
+						</Transition>
+					</Transition>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={90}>
+					<RealStickers />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={70}>
+					<Title line1="The power is" line2="in your hands." />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={100}>
+					<Springy />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={75}>
+					<EndLogo />
+				</Series.Sequence>
+			</Series>
 			<Audio src={audio} />
 		</div>
 	);
