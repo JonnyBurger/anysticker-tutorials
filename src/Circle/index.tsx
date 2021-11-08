@@ -1,8 +1,14 @@
 import React from 'react';
-import {spring, SpringConfig, useCurrentFrame, useVideoConfig} from 'remotion';
+import {
+	Img,
+	spring,
+	SpringConfig,
+	useCurrentFrame,
+	useVideoConfig,
+} from 'remotion';
 import styled from 'styled-components';
 
-const Logo = styled.img`
+const Logo = styled(Img)`
 	height: 180px;
 	position: absolute;
 `;

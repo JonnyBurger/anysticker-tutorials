@@ -1,5 +1,7 @@
 import {Composition, Still} from 'remotion';
 import {Announcement} from './Announcement';
+import {FourPhones} from './FourPhones';
+import {PhoneCircle} from './PhoneCircle';
 import {RealStill} from './RealStickers/RealStill';
 import {TwoScreens} from './TwoScreens';
 import {Welcome} from './Welcome';
@@ -80,7 +82,7 @@ export const RemotionVideo: React.FC = () => {
 			/>
 			<Composition
 				id="announcement"
-				durationInFrames={400}
+				durationInFrames={260}
 				fps={30}
 				component={Announcement}
 				width={1080}
@@ -93,6 +95,24 @@ export const RemotionVideo: React.FC = () => {
 				component={TwoScreens}
 				width={1080}
 				height={1080}
+			/>
+			<Composition
+				id="circle-screens"
+				durationInFrames={90}
+				fps={30}
+				component={PhoneCircle}
+				width={1080}
+				height={1080}
+				defaultProps={{}}
+			/>
+			<Composition
+				id="four-phones"
+				durationInFrames={90}
+				fps={30}
+				component={FourPhones}
+				width={1080}
+				height={1080}
+				defaultProps={{}}
 			/>
 		</>
 	);

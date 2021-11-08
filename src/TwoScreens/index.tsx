@@ -6,19 +6,13 @@ import {
 	useVideoConfig,
 } from 'remotion';
 import {Phone} from '../RealStickers/Phone';
+import screen2 from '../RealStickers/screen2.png';
+import screen7 from '../RealStickers/screen7.png';
 
 export const TwoScreens: React.FC = () => {
 	const {fps} = useVideoConfig();
 	const frame = useCurrentFrame();
 
-	const flip = spring({
-		fps,
-		frame: (frame - 20) / 4,
-		config: {
-			mass: 1,
-			damping: 30,
-		},
-	});
 	const progress = frame / 60;
 	const z = 0;
 	const x = interpolate(progress, [0, 1], [0, Math.PI], {});
@@ -47,14 +41,19 @@ export const TwoScreens: React.FC = () => {
 						left: '-25%',
 					}}
 				>
-					<Phone baseScale={1.3} rotate={[-x, -y, -z]} scale={1} />
+					<Phone
+						image={screen2}
+						baseScale={1.3}
+						rotate={[-x, -y, -z]}
+						scale={1}
+					/>
 				</AbsoluteFill>
 				<AbsoluteFill
 					style={{
 						left: '25%',
 					}}
 				>
-					<Phone baseScale={1.3} rotate={[x, y, z]} scale={1} />
+					<Phone image={screen7} baseScale={1.3} rotate={[x, y, z]} scale={1} />
 				</AbsoluteFill>
 			</AbsoluteFill>
 		</AbsoluteFill>

@@ -1,6 +1,6 @@
 import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Phone} from './RealStickers/Phone';
-
+import screen from './RealStickers/screen.jpg';
 export const JumpPhone: React.FC<{
 	phoneScale: number;
 }> = ({phoneScale}) => {
@@ -39,6 +39,7 @@ export const JumpPhone: React.FC<{
 
 	return (
 		<Phone
+			image={screen}
 			rotate={[rotateX, rotateY, rotateZ]}
 			scale={entranceAnimation}
 			baseScale={phoneScale}

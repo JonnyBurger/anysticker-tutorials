@@ -1,7 +1,7 @@
 import {useLoader, useThree} from '@react-three/fiber';
 import {ThreeCanvas} from '@remotion/three';
-import React, {useEffect, useMemo} from 'react';
-import {useVideoConfig} from 'remotion';
+import React, {useEffect, useMemo, useState} from 'react';
+import {continueRender, delayRender, useVideoConfig} from 'remotion';
 import * as THREE from 'three';
 import {
 	CAMERA_DISTANCE,
@@ -12,7 +12,6 @@ import {
 } from './helpers/layout';
 import {roundedRect} from './helpers/rounded-rectangle';
 import {RoundedBox} from './RoundedBox';
-import screen from './screen.jpg';
 
 const aspectRatio = 0.5;
 
@@ -20,9 +19,10 @@ type Props = {
 	scale: number;
 	rotate: [number, number, number];
 	baseScale: number;
+	image: string;
 };
 
-const InnerPhone: React.FC<Props> = ({scale, rotate, baseScale}) => {
+const InnerPhone: React.FC<Props> = ({scale, rotate, baseScale, image}) => {
 	const layout = useMemo(() => getPhoneLayout(aspectRatio, baseScale), [
 		baseScale,
 	]);
@@ -47,12 +47,14 @@ const InnerPhone: React.FC<Props> = ({scale, rotate, baseScale}) => {
 		});
 	}, [layout.screen.height, layout.screen.radius, layout.screen.width]);
 
-	const texture = useLoader(THREE.TextureLoader, screen) as THREE.Texture;
+	const texture = useLoader(THREE.TextureLoader, image) as THREE.Texture;
 
 	useEffect(() => {
 		if (texture) {
 			texture.repeat.y = 1 / layout.screen.height;
 			texture.repeat.x = 1 / layout.screen.width;
+		} else {
+			console.log({texture});
 		}
 	}, [layout.screen.height, layout.screen.width, texture]);
 
@@ -78,6 +80,12 @@ const InnerPhone: React.FC<Props> = ({scale, rotate, baseScale}) => {
 
 export const Phone: React.FC<Props> = (props) => {
 	const {width, height} = useVideoConfig();
+	const [handle] = useState(() => delayRender());
+	useEffect(() => {
+		setTimeout(() => {
+			continueRender(handle);
+		}, 300);
+	}, [handle]);
 	return (
 		<ThreeCanvas linear width={width} height={height}>
 			<InnerPhone {...props} />

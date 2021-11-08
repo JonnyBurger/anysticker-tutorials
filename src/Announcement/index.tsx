@@ -1,22 +1,61 @@
-import {Sequence, Series} from 'remotion';
+import React from 'react';
+import {
+	AbsoluteFill,
+	Audio,
+	interpolate,
+	Sequence,
+	Series,
+	useVideoConfig,
+} from 'remotion';
+import rainforest from '../../rainforest.mp3';
 import EndLogo from '../Circle';
+import {FourPhones} from '../FourPhones';
+import {PhoneCircle} from '../PhoneCircle';
 import RealStickers from '../RealStickers';
+import {Title} from '../Title';
 import {TwoScreens} from '../TwoScreens';
 
 export const Announcement: React.FC = () => {
+	const {durationInFrames} = useVideoConfig();
 	return (
-		<Series>
-			<Series.Sequence durationInFrames={40}>
-				<RealStickers phoneScale={1} />
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={66}>
-				<Sequence from={-4}>
-					<TwoScreens />
-				</Sequence>
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={66}>
-				<EndLogo />
-			</Series.Sequence>
-		</Series>
+		<AbsoluteFill>
+			<Series>
+				<Series.Sequence durationInFrames={40}>
+					<PhoneCircle />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={50}>
+					<Sequence from={-4}>
+						<TwoScreens />
+					</Sequence>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={40}>
+					<Sequence from={-5}>
+						<FourPhones />
+					</Sequence>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={50}>
+					<RealStickers phoneScale={1} />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={50}>
+					<Title line1="Finally" line2=" available" />
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={40}>
+					<EndLogo />
+				</Series.Sequence>
+			</Series>
+			<Audio
+				src={rainforest}
+				volume={(f) =>
+					interpolate(
+						f,
+						[durationInFrames - 30, durationInFrames - 1],
+						[1, 0],
+						{
+							extrapolateLeft: 'clamp',
+						}
+					)
+				}
+			/>
+		</AbsoluteFill>
 	);
 };
