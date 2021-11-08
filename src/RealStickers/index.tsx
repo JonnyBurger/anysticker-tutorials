@@ -164,7 +164,7 @@ const RealStickers: React.FC = () => {
 				})}
 			</div>
 			<AbsoluteFill>
-				<ThreeCanvas width={width} height={height}>
+				<ThreeCanvas linear flat={false} width={width} height={height}>
 					<ambientLight intensity={3} color={0xffffff} />
 					<pointLight position={[10, 10, 0]} />
 					<Phone baseScale={1} aspectRatio={9 / 18} />
