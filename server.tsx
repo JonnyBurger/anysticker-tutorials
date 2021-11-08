@@ -46,7 +46,7 @@ app.get('/', async (req, res) => {
 		const tmpDir = await fs.promises.mkdtemp(
 			path.join(os.tmpdir(), 'remotion-')
 		);
-		await renderFrames({
+		const {assetsInfo} = await renderFrames({
 			config: video,
 			webpackBundle: bundled,
 			onStart: () => console.log('Rendering frames...'),
@@ -57,8 +57,9 @@ app.get('/', async (req, res) => {
 			},
 			parallelism: null,
 			outputDir: tmpDir,
-			userProps: req.query,
+			inputProps: req.query,
 			compositionId,
+			imageFormat: 'jpeg',
 		});
 
 		const finalOutput = path.join(tmpDir, 'out.mp4');
@@ -69,6 +70,7 @@ app.get('/', async (req, res) => {
 			height: video.height,
 			width: video.width,
 			outputLocation: finalOutput,
+			assetsInfo,
 		});
 		cache.set(JSON.stringify(req.query), finalOutput);
 		sendFile(finalOutput);

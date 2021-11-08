@@ -1,5 +1,7 @@
+import {ThreeCanvas} from '@remotion/three';
 import React from 'react';
 import {
+	AbsoluteFill,
 	Img,
 	interpolate,
 	spring,
@@ -8,6 +10,7 @@ import {
 	useVideoConfig,
 } from 'remotion';
 import {output} from './data';
+import {Phone} from './Phone';
 
 const svgPath = require('svg-path-properties');
 
@@ -18,6 +21,7 @@ const stickerSize = 200;
 const RealStickers: React.FC = () => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
+	const {width, height} = useVideoConfig();
 
 	const springConfig: SpringConfig = {
 		damping: 20,
@@ -100,7 +104,6 @@ const RealStickers: React.FC = () => {
 		return data;
 	})();
 
-	const f = require('./imgs/Rotato Frame ' + phoneFrame + '.png');
 	return (
 		<div
 			style={{
@@ -159,15 +162,14 @@ const RealStickers: React.FC = () => {
 						/>
 					);
 				})}
-				<Img
-					src={f}
-					style={{
-						position: 'absolute',
-						transform: `scale(${phoneScale})`,
-						top: videoConfig.height / 2 - 1080 / 2,
-					}}
-				/>
 			</div>
+			<AbsoluteFill>
+				<ThreeCanvas width={width} height={height}>
+					<ambientLight intensity={3} color={0xffffff} />
+					<pointLight position={[10, 10, 0]} />
+					<Phone baseScale={1} aspectRatio={9 / 18} />
+				</ThreeCanvas>
+			</AbsoluteFill>
 		</div>
 	);
 };
