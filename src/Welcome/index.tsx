@@ -10,7 +10,9 @@ import {Title} from '../Title';
 import {Transition} from '../Transition';
 import audio from './audio.mp4';
 
-export const Welcome: React.FC = () => {
+export const Welcome: React.FC<{
+	phoneScale: number;
+}> = ({phoneScale}) => {
 	const yourselfGetImage = (f: number) =>
 		require('./stickerify-yourself/Untitled Frame ' + (f + 20) + '.png');
 	const objectGetImage = (f: number) =>
@@ -101,7 +103,7 @@ export const Welcome: React.FC = () => {
 					</Transition>
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={90}>
-					<RealStickers />
+					<RealStickers phoneScale={phoneScale} />
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={70}>
 					<Title line1="The power is" line2="in your hands." />

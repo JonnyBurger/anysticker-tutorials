@@ -1,6 +1,7 @@
 import {useLoader, useThree} from '@react-three/fiber';
+import {ThreeCanvas} from '@remotion/three';
 import React, {useEffect, useMemo} from 'react';
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {useVideoConfig} from 'remotion';
 import * as THREE from 'three';
 import {
 	CAMERA_DISTANCE,
@@ -13,15 +14,16 @@ import {roundedRect} from './helpers/rounded-rectangle';
 import {RoundedBox} from './RoundedBox';
 import screen from './screen.jpg';
 
-export const Phone: React.FC<{aspectRatio: number; baseScale: number}> = ({
-	aspectRatio,
-	baseScale,
-}) => {
-	const frame = useCurrentFrame();
-	const {fps, durationInFrames} = useVideoConfig();
+const aspectRatio = 0.5;
 
+type Props = {
+	scale: number;
+	rotate: [number, number, number];
+	baseScale: number;
+};
+
+const InnerPhone: React.FC<Props> = ({scale, rotate, baseScale}) => {
 	const layout = useMemo(() => getPhoneLayout(aspectRatio, baseScale), [
-		aspectRatio,
 		baseScale,
 	]);
 
@@ -33,42 +35,9 @@ export const Phone: React.FC<{aspectRatio: number; baseScale: number}> = ({
 		camera.near = 0.2;
 		camera.far = Math.max(5000, CAMERA_DISTANCE * 2);
 		camera.lookAt(0, 0, 0);
-	}, [camera]);
-
-	// During the whole scene, the phone is rotating.
-	// 2 * Math.PI is a full rotation.
-	const constantRotation = interpolate(
-		frame,
-		[0, durationInFrames],
-		[0, Math.PI * 6]
-	);
-
-	// When the composition starts, there is some extra
-	// rotation and translation.
-	const entranceAnimation = spring({
-		frame,
-		fps,
-		config: {
-			damping: 200,
-			mass: 3,
-		},
-	});
-
-	// Calculate the entrance rotation,
-	// doing one full spin
-	const entranceRotation = interpolate(
-		entranceAnimation,
-		[0, 1],
-		[-Math.PI, Math.PI]
-	);
+	}, [camera, layout.phone.position]);
 
 	// Calculating the total rotation of the phone
-	const rotateY = entranceRotation + constantRotation;
-
-	// Calculating the translation of the phone at the beginning.
-	// The start position of the phone is set to 4 "units"
-	const translateY = interpolate(entranceAnimation, [0, 1], [-4, 0]);
-
 	// Calculate a rounded rectangle for the phone screen
 	const screenGeometry = useMemo(() => {
 		return roundedRect({
@@ -85,14 +54,10 @@ export const Phone: React.FC<{aspectRatio: number; baseScale: number}> = ({
 			texture.repeat.y = 1 / layout.screen.height;
 			texture.repeat.x = 1 / layout.screen.width;
 		}
-	}, [aspectRatio, layout.screen.height, layout.screen.width, texture]);
+	}, [layout.screen.height, layout.screen.width, texture]);
 
 	return (
-		<group
-			scale={entranceAnimation}
-			rotation={[0, rotateY, 0]}
-			position={[0, translateY, 0]}
-		>
+		<group scale={scale} rotation={rotate}>
 			<RoundedBox
 				radius={layout.phone.radius}
 				depth={layout.phone.thickness}
@@ -108,5 +73,14 @@ export const Phone: React.FC<{aspectRatio: number; baseScale: number}> = ({
 				<meshBasicMaterial color={0xffffff} map={texture} />
 			</mesh>
 		</group>
+	);
+};
+
+export const Phone: React.FC<Props> = (props) => {
+	const {width, height} = useVideoConfig();
+	return (
+		<ThreeCanvas linear width={width} height={height}>
+			<InnerPhone {...props} />
+		</ThreeCanvas>
 	);
 };

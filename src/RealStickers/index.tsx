@@ -1,4 +1,3 @@
-import {ThreeCanvas} from '@remotion/three';
 import React from 'react';
 import {
 	AbsoluteFill,
@@ -9,8 +8,8 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
+import {JumpPhone} from '../JumpPhone';
 import {output} from './data';
-import {Phone} from './Phone';
 
 const svgPath = require('svg-path-properties');
 
@@ -18,10 +17,11 @@ const spacePerSticker = 280;
 const stickersInSmallestCircle = 7;
 const stickerSize = 200;
 
-const RealStickers: React.FC = () => {
+const RealStickers: React.FC<{
+	phoneScale: number;
+}> = ({phoneScale}) => {
 	const videoConfig = useVideoConfig();
 	const frame = useCurrentFrame();
-	const {width, height} = useVideoConfig();
 
 	const springConfig: SpringConfig = {
 		damping: 20,
@@ -37,37 +37,10 @@ const RealStickers: React.FC = () => {
 		fps: videoConfig.fps,
 		to: 1,
 	});
-	const phoneScale = spring({
-		config: springConfig,
 
-		from: 0,
-		to: 1.2,
-		fps: videoConfig.fps,
-		frame,
-	});
-	const phoneSpring = spring({
-		config: {
-			...springConfig,
-			damping: 1000,
-			mass: 1,
-			stiffness: 2,
-		},
-		from: 0,
-		to: 1,
-		fps: videoConfig.fps,
-		frame,
-	});
 	const scale = interpolate(baseSpring, [0, 1], [0, 0.7]);
 	const spaceBetweenCircle = interpolate(baseSpring, [0, 1], [0.7, 1]);
 
-	const scaleOut = spring({
-		config: springConfig,
-		from: 0,
-		to: 1,
-		fps: videoConfig.fps,
-		frame: videoConfig.durationInFrames - frame,
-	});
-	const phoneFrame = Math.floor(interpolate(phoneSpring, [0, 1], [1, 160]));
 	const _cData = (function () {
 		const data: {
 			cx: number;
@@ -114,7 +87,7 @@ const RealStickers: React.FC = () => {
 		>
 			<div
 				style={{
-					transform: `scale(${scale * scaleOut})`,
+					transform: `scale(${scale})`,
 					width: videoConfig.width,
 					height: videoConfig.height,
 				}}
@@ -164,11 +137,7 @@ const RealStickers: React.FC = () => {
 				})}
 			</div>
 			<AbsoluteFill>
-				<ThreeCanvas linear flat={false} width={width} height={height}>
-					<ambientLight intensity={3} color={0xffffff} />
-					<pointLight position={[10, 10, 0]} />
-					<Phone baseScale={1} aspectRatio={9 / 18} />
-				</ThreeCanvas>
+				<JumpPhone phoneScale={phoneScale} />
 			</AbsoluteFill>
 		</div>
 	);
