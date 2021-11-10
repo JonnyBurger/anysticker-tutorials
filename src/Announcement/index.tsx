@@ -20,7 +20,7 @@ export const Announcement: React.FC = () => {
 	return (
 		<AbsoluteFill>
 			<Series>
-				<Series.Sequence durationInFrames={40}>
+				<Series.Sequence durationInFrames={30}>
 					<PhoneCircle />
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={50}>
@@ -34,10 +34,10 @@ export const Announcement: React.FC = () => {
 					</Sequence>
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={50}>
-					<RealStickers phoneScale={1} />
+					<RealStickers phoneScale={1.3} />
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={50}>
-					<Title line1="Finally" line2=" available" />
+					<Title line1="Now in the" line2="App Store" />
 				</Series.Sequence>
 				<Series.Sequence durationInFrames={40}>
 					<EndLogo />

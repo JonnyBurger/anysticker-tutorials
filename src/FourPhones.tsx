@@ -38,7 +38,7 @@ export const FourPhones: React.FC = () => {
 			damping: 100,
 		},
 	});
-	const constant = frame / 300;
+	const constant = frame / 200;
 
 	const progress =
 		spring({
@@ -48,7 +48,7 @@ export const FourPhones: React.FC = () => {
 				damping: 200,
 			},
 		}) + constant;
-	const scale = interpolate(progress, [0, 1], [0.8, 1]);
+	const scale = interpolate(progress, [0, 1], [1, 0.9]);
 	const distance = progress * 50;
 	const phonesInCircle = 8;
 	return (
@@ -57,12 +57,17 @@ export const FourPhones: React.FC = () => {
 				backgroundColor: 'white',
 			}}
 		>
-			<AbsoluteFill>
+			<AbsoluteFill
+				style={{
+					transform: `scale(${scale})`,
+				}}
+			>
 				{new Array(phonesInCircle).fill(true).map((arr, i) => {
 					const index = i;
 
 					return (
 						<AbsoluteFill
+							key={index}
 							style={{
 								left:
 									interpolate(
@@ -75,7 +80,11 @@ export const FourPhones: React.FC = () => {
 							<Phone
 								image={screens[i]}
 								baseScale={1}
-								rotate={[0, (Math.PI / 4) * progress, 0]}
+								rotate={[
+									0,
+									(Math.PI / 6 + (index * Math.PI) / 48) * progress,
+									0,
+								]}
 								scale={scale}
 							/>
 						</AbsoluteFill>

@@ -54,10 +54,14 @@ export const Title: React.FC<{
 				>
 					{line1}
 				</span>
+				<br />
 				<span
-					style={{transform: `scale(${secondWord})`, display: 'inline-block'}}
+					style={{
+						transform: `scale(${secondWord})`,
+						display: 'inline-block',
+						whiteSpace: 'pre',
+					}}
 				>
-					{' '}
 					{line2}
 				</span>
 			</div>
